@@ -1,0 +1,9 @@
+PREFIX ex: <http://ex.org/>
+
+SELECT ?title (COUNT(?platform) AS ?platformCount)
+WHERE {
+    ?movie ex:title ?title ;
+           ex:platform ?platform .
+}
+GROUP BY ?title
+ORDER BY DESC(?platformCount)

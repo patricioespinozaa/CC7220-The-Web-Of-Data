@@ -1,0 +1,38 @@
+"
+Nombre: Patricio Espinoza A.
+Tarea: Lab 6
+Curso: La Web de Datos
+"
+
+"# Q1"
+ex:capitalCity rdfs:subPropertyOf ex:hasPart .
+ex:prefecture rdfs:subPropertyOf ex:isPartOf .
+ex:region rdfs:subPropertyOf ex:isPartOf .
+ex:country rdfs:subPropertyOf ex:isPartOf .
+
+"# Q2"
+ex:hasPart owl:inverseOf ex:isPartOf .
+
+"# Q3"
+ex:hasPart a owl:TransitiveProperty .
+
+"# Q4"
+ex:sharesBorderWith a owl:SymmetricProperty .
+
+"# Q5"
+ex:formerlyKnownAs owl:propertyChainAxiom ( ex:replaced ex:name ) .
+
+"# Q6"
+ex:countryOfBirth owl:propertyChainAxiom (ex:placeOfBirth ex:prefecture ex:region ex:country) .
+
+"# Q7"
+ex:alpha2code rdf:type owl:InverseFunctionalProperty .
+
+"# Q8"
+ex:capitalCity rdf:type owl:FunctionalProperty .
+
+"# Q9"
+ex:SupremeCourt owl:hasKey (ex:country ex:name) .
+
+"# Q10"
+ex:capitalCity rdf:type owl:IrreflexiveProperty .

@@ -1,0 +1,51 @@
+"
+Nombre: Patricio Espinoza A.
+Tarea: Lab 7
+Curso: La Web de Datos
+"
+
+" Inicial "
+ [ owl:allValuesFrom ex:TripleStar ; owl:onProperty ex:hasSibling ] owl:equivalentClass
+ [ owl:intersectionOf ( [ owl:someValuesFrom owl:Thing ; owl:onProperty ex:hasSibling ] ex:TripleStar ) ] .
+
+# Q1
+[ owl:unionOf ( ex:Planet ex:DwarfPlanet ) ] rdfs:subClassOf ex:Planemo .
+
+# Q2
+ex:Planemo rdfs:subClassOf [ owl:allValuesFrom ex:Moon ; owl:onProperty ex:hasChild ] .
+
+# Q3
+[ owl:unionOf ( ex:Moon ex:Planemo ex:Star ) ] rdfs:subClassOf ex:AstronomicBody .
+
+# Q4
+[ owl:hasValue ex:Sol ; owl:onProperty ex:hasAntecedent ] owl:equivalentClass ex:SolarBody .
+
+# Q5
+ex:SolarPlanemo owl:equivalentClass [ owl:intersectionOf ( ex:SolarBody ex:Planemo ) ] .
+
+# Q6 
+ex:Planemo owl:disjointWith ex:Moon .
+
+# Q7
+[ owl:someValuesFrom ex:AstronomicBody ; owl:onProperty ex:discovered ] rdfs:subClassOf 
+  [ owl:hasValue ex:Astronomer ; owl:onProperty ex:occupation ] , ex:Person .
+
+# Q8 
+ex:Star rdfs:subClassOf [ owl:onProperty ex:hasChild ; 
+                          owl:maxQualifiedCardinality "0"^^xsd:nonNegativeInteger ; 
+                          owl:onClass ex:Moon ] .
+
+# Q9
+[ owl:someValuesFrom ex:LoneStar ; owl:onProperty ex:hasAntecedent ] 
+    rdfs:subClassOf [ owl:onProperty ex:hasAntecedent ; 
+                      owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ; 
+                      owl:onClass ex:Star ] .
+
+# Q10 
+
+#Pt1. 
+ex:RedDwarfStar owl:disjointWith ex:YellowDwarfStar .
+
+#Pt2.
+ex:TripleStar rdfs:subClassOf [ owl:cardinality "2"^^xsd:nonNegativeInteger ; owl:onProperty ex:hasSibling ] .
+

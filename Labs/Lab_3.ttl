@@ -1,0 +1,42 @@
+# input data
+@prefix ex:  <http://ex.org/>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+ex:Platypus ex:name "Ornitorrinco"@es-CL , "Platypus"@en ;
+  ex:speciesName "Ornithorhynchus anatinus"@la ;
+  a ex:NearThreatenedSpecies ; ex:genus ex:Ornithorhynchus .
+ex:Knuckles a ex:TachyglossusAculeatus .
+ex:TachyglossusAculeatus ex:name "Equidna"@es-CL , "Short-beaked Echidna"@en ;
+  ex:speciesName "Tachyglossus aculeatus"@la ;
+  a ex:OviparousSpecies ; ex:genus ex:Tachyglossus .
+ex:ZaglossusBruijnii ex:name "Western long-beaked echidna"@en ;
+  a ex:CriticallyEndangeredSpecies ; ex:genus ex:Zaglossus .
+ex:Ornithorhynchus ex:name "Ornithorhynchus"@la ; ex:family ex:Ornithorhynchidae .
+ex:Tachyglossus ex:name "Tachyglossusnchus"@la ; ex:family ex:Tachyglossidae .
+ex:Zaglossus ex:name "Zaglossus"@la ; ex:family ex:Tachyglossidae .
+ex:Ornithorhynchidae ex:name "Ornithorhynchidae"@la ; ex:order ex:Monotremata .
+ex:Tachyglossidae ex:name "Tachyglossidae"@la ; ex:order ex:Monotremata .
+
+
+# Q1
+ex:speciesName rdfs:subPropertyOf ex:name .
+
+# Q2
+ex:CriticallyEndangeredSpecies rdfs:subClassOf ex:Species .
+
+# Q3
+ex:speciesName rdfs:domain ex:Species .
+
+# Q4
+ex:genus rdfs:range ex:Genus .
+ex:family rdfs:range ex:Family .
+ex:order rdfs:range ex:Order .
+
+# Q5
+ex:genus rdfs:subPropertyOf ex:parentTaxon .
+ex:family rdfs:subPropertyOf ex:parentTaxon .
+ex:order rdfs:subPropertyOf ex:parentTaxon .
+
+# Q6
+ex:parentTaxon rdfs:subPropertyOf rdfs:subClassOf .
+

@@ -1,0 +1,85 @@
+"
+Nombre: Patricio Espinoza A.
+Tarea: Lab 5
+Curso: La Web de Datos
+"
+
+"# Q1"
+SELECT DISTINCT ?videoGame
+WHERE {
+  ?game wdt:P31/wdt:P279* wd:Q7889;
+        wdt:P840 wd:Q111 ;
+        rdfs:label ?videoGame .
+    FILTER (lang(?videoGame)="en")
+}
+
+"# Q2"
+SELECT DISTINCT ?moreGamesName
+WHERE {
+  wd:Q863643 wdt:P178 ?developer.  
+  ?moreGames wdt:P178 ?developer;  
+              wdt:P31/wdt:P279* wd:Q7889.  
+  ?moreGames rdfs:label ?moreGamesName.    
+  FILTER(?moreGames != wd:Q863643)         
+  FILTER(lang(?moreGamesName) = "en")      
+}
+
+"# Q3"
+SELECT DISTINCT ?videoGamesNames
+WHERE {
+  ?videoGame  wdt:P31/wdt:P279* wd:Q7889 ;
+                    wdt:P178 ?developer .
+  ?developer wdt:P17 wd:Q298 .
+  ?videoGame rdfs:label ?videoGamesNames .
+  FILTER(lang(?videoGamesNames)= "es")
+}
+
+"# Q4"
+SELECT DISTINCT ?videoGameLabel ?money
+WHERE {
+  ?videoGame wdt:P31/wdt:P279* wd:Q7889;
+        wdt:P2130 ?money .
+        ?videoGame rdfs:label ?videoGameLabel
+  FILTER(lang(?videoGameLabel) = 'en')
+}
+ORDER BY DESC(?money)
+LIMIT 1
+
+"# Q5"
+SELECT ?developerLabel (COUNT(?videoGame) AS ?numGamesDeveloped)
+WHERE {
+  ?videoGame wdt:P31/wdt:P279* wd:Q7889;
+        wdt:P136/wdt:P279* wd:Q13698 ;
+        wdt:P178 ?developer .
+        ?developer rdfs:label ?developerLabel
+  FILTER(lang(?developerLabel) = 'en')
+}
+GROUP BY ?developerLabel
+HAVING(COUNT(?videoGame)>=3)
+ORDER BY DESC(?numGamesDeveloped)
+
+"# Q6"
+SELECT DISTINCT ?videoGame ?videoGameLabel ?transitiveSequelsLabel ?transitiveSequels (COUNT(DISTINCT ?transitiveSequels) AS ?Sequels)
+WHERE {
+  ?videoGame wdt:P31/wdt:P279* wd:Q7889;
+             wdt:P400 wd:Q184198 .
+  ?videoGame rdfs:label ?videoGameLabel
+  FILTER(lang(?videoGameLabel) = 'en')
+  
+  FILTER NOT EXISTS {
+    ?videoGame wdt:P400 ?otherPlataform .
+    FILTER(?otherPlataform != wd:Q184198)
+  }
+
+  OPTIONAL {
+    ?videoGame wdt:P179/wdt:P179* ?transitiveSequels .
+    ?transitiveSequels rdfs:label ?transitiveSequelsLabel .
+    ?videoGame rdfs:label ?videoGameLabel .
+    ?transitiveSequels rdfs:label ?transitiveSequelsLabel 
+    FILTER(?videoGame != ?transitiveSequels)
+    FILTER(lang(?videoGameLabel) = 'en')
+    FILTER(lang(?transitiveSequelsLabel) = 'en')
+  }
+}
+GROUP BY ?videoGame ?videoGameLabel ?transitiveSequels ?transitiveSequelsLabel
+ORDER BY DESC(?Sequels)

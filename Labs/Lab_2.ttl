@@ -1,0 +1,65 @@
+@prefix ex:  <http://ex.org/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ex:HPLovecraft a ex:Person ;
+    ex:name "Howard Phillips Lovecraft" ;
+    ex:nickname "H.P. Lovecraft" ;
+    ex:birthDate "1890-08-20"^^xsd:date ;
+    ex:birthPlace ex:Providence ;
+    ex:deathDate "1937-03-15"^^xsd:date ;
+    ex:deathCause ex:Cancer ;
+    ex:ageAtDeath 46 ;
+    ex:nationality ex:American ;
+    ex:occupation ex:Writer ;
+    ex:WrittingGenre ex:HorrorFiction ;
+    ex:wrote ex:TheRatsInTheWalls, ex:TheCallOfCthulhu, ex:AtTheMountainsOfMadness .
+
+ex:Providence ex:partOf ex:RhodeIsland.
+
+ex:SoniaGreene a ex:Person ;
+    ex:name "Sonia Greene".
+
+_:Marriage1 ex:wife ex:SoniaGreene;
+    ex:husband ex:HPLovecraft;
+    a ex:Marriage;
+    ex:marriageDate "1924"^^xsd:gYear;
+    ex:NumberOfChildren 0.
+
+ex:TheRatsInTheWalls a ex:Literature ;
+    ex:title "The Rats in the Walls"@en .
+
+ex:TheCallOfCthulhu a ex:Literature;
+    ex:title "The Call of Cthulhu"@en , "La Llamada de Cthulhu"@es , "L’Appel de Cthulhu"@fr ;
+    ex:genre ex:HorrorFiction ;
+    ex:writtenIn "1926"^^xsd:gYear ;
+    ex:firstPublishedIn "1928-02"^^xsd:gYearMonth ;
+    ex:publishedIn ex:WeirdTales ;
+    a ex:ShortStory  ;
+    ex:chapters (ex:TheHorrorInClay ex:TheTaleOfInspectorLegrasse ex:TheMadnessFromTheSea) .
+
+ex:WeirdTales a ex:PulpMagazine.
+
+ex:AtTheMountainsOfMadness a ex:Literature ;
+    ex:title "At the Mountains of Madness"@en .
+
+ex:TheHorrorInClay a ex:Chapter ;
+    ex:title "The Horror in Clay"@en .
+
+ex:TheTaleOfInspectorLegrasse a ex:Chapter ;
+    ex:title "The Tale of Inspector Legrasse"@en .
+
+ex:TheMadnessFromTheSea a ex:Chapter ;
+    ex:title "The Madness from the Sea"@en .
+
+ex:WinfieldLovecraft a ex:Person ;
+    ex:name "Winfield Lovecraft" .
+
+ex:SarahLovecraft a ex:Person ;
+    ex:name "Sarah Lovecraft" .
+
+_:Marriage2 ex:wife ex:SarahLovecraft;
+    ex:husband ex:WinfieldLovecraft;
+    a ex:Marriage;
+    ex:Son ex:HPLovecraft;
+    ex:NumberOfChildren 1 .

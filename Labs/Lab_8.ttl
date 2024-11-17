@@ -1,0 +1,72 @@
+"
+Nombre: Patricio Espinoza A.
+Tarea: Lab 8
+Curso: La Web de Datos
+"
+
+# Q1
+ex:hasTwin a owl:ObjectProperty .
+ex:Zonkey a owl:Class .
+ex:hasTwin rdfs:domain ex:Zonkey ; rdfs:range ex:Zonkey .
+
+# Q2
+# 2 padres (Sire y Dam)
+ex:Equine rdfs:subClassOf [ owl:cardinality "2"^^xsd:nonNegativeInteger ; owl:onProperty ex:hasParent ] .
+
+# Inferencia a traves de los padres de Zia y de Zach (como Zach es Zebroid y tiene padre x,y entonces Zia con padres x,y es Zebroid)
+ex:Zebroid a owl:Class ;
+    owl:equivalentClass [
+        a owl:Restriction ;
+        owl:onProperty ex:hasSire ;
+        owl:someValuesFrom ex:hasSire
+    ] ;
+    owl:equivalentClass [
+        a owl:Restriction ;
+        owl:onProperty ex:hasDam ;
+        owl:someValuesFrom ex:hasDam
+    ] ;
+    owl:allValuesFrom ex:Zebroid .
+
+
+# Q3
+# Lea es Zebra sire y el resto de equinos son horse sire
+# A partir de 
+# ex:Zeb a ex:Zorse ; ex:hasDam ex:Lea ; ex:hasSire ex:Zamba .
+# Se infiere que 
+# ex:Zach a ex:Zebroid ; ex:hasDam ex:Lea ; ex:hasSire ex:Marty .
+# ex:Zia ex:hasDam ex:Lea ; ex:hasSire ex:Marty .
+# ex:Zab ex:hasDam ex:Lea ; ex:hasSire ex:Zamba .
+ex:Zorse a owl:Class ;
+    owl:equivalentClass [
+        a owl:Restriction ;
+        owl:onProperty ex:hasSire ;
+        owl:someValuesFrom ex:Zebra
+    ] ;
+    owl:equivalentClass [
+        a owl:Restriction ;
+        owl:onProperty ex:hasDam ;
+        owl:someValuesFrom ex:Horse
+    ] ;
+    owl:allValuesFrom ex:Zorse .
+
+# Q4
+# Se infiere que Zeta es Zebra (Zebra dam) a partir de
+# ex:Zeta a ex:Zebra .
+# Se infiere que Jupiter es a Horse (Horse sire) a partir de
+# ex:Trip a ex:Horse ; ex:hasDam ex:Canela ; ex:hasSire ex:Jupiter .
+# Y finalmente se infiere que por cumplir que Noting that a hebra is any child of a zebra dam and a horse sire
+# ex:Hannah a ex:Hebra .
+
+ex:Hebra a owl:Class ;
+    owl:equivalentClass [
+        a owl:Restriction ;
+        owl:onProperty ex:hasDam ;
+        owl:someValuesFrom ex:Zebra
+    ] ;
+    owl:equivalentClass [
+        a owl:Restriction ;
+        owl:onProperty ex:hasSire ;
+        owl:someValuesFrom ex:Horse
+    ] ;
+    owl:allValuesFrom ex:Hebra .
+

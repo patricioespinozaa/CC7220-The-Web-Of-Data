@@ -1,0 +1,109 @@
+# Nombre: Patricio Espinoza A.
+# Tarea: Lab 9
+# Curso: La Web de Datos
+
+
+# Q1
+s:CMShape a sh:NodeShape ;
+    sh:targetClass :ChessMatch ;    # instancias de ChessMatch
+    sh:property [
+        sh:path :pgn ;
+        sh:pattern "^1" ;           # pgn empieza con "1"
+    ] .
+
+s:COShape a sh:NodeShape ;
+    sh:targetClass :ChessOpening ;  # instancias de ChessOpening
+    sh:property [
+        sh:path :pgn ;
+        sh:pattern "^1" ;           # pgn empieza con "1"
+    ] .
+
+# Q2
+s:ChessTournamentShape a sh:NodeShape ;
+  sh:targetClass :ChessTournament ;            # Aplica a ChessTournament y sus subclases
+  sh:or (
+    [ sh:path :venue ; sh:minCount 1 ]         # Al menos un venue
+    [ sh:path :website ; sh:minCount 1 ]       # Al menos un website
+  ) .
+
+# Q3
+s:ChessMatchShape a sh:NodeShape ;
+  sh:targetClass :ChessMatch ;
+  sh:property [
+    sh:path :result ;
+    sh:minCount 1 ;                                 # 1 Resultado
+    sh:maxCount 1 ;   
+    sh:in ( :WhiteWin :BlackWin :Draw :Incomplete ) # Valores permitidos
+  ] .
+
+# Q4
+s:ChessMatchShape a sh:NodeShape ;
+    sh:targetClass :ChessMatch ;  # ChessMatch y subclases de ChessMatch
+    sh:property [
+        sh:path :next ;           # Restricción sobre la propiedad :next
+        sh:disjoint :prev ;       # :next y :prev no deben tener el mismo valor
+    ] .
+
+# Q5
+s:ChessMatchShape a sh:NodeShape ;
+    sh:targetClass :ChessMatch ;  # Aplica a todas las instancias de ChessMatch
+    sh:property [
+        sh:path :opening ;        # Define restricciones para la propiedad :opening
+        sh:class :ChessOpening ;  # Asegura que el valor sea una instancia de ChessOpening
+    ] .
+
+# Q6
+s:ChessPlayerShape a sh:NodeShape ;
+  sh:property [
+    sh:path :country ;                  # Debe tener 1 solo pais
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path :dob ;
+    sh:datatype xsd:date ;              # Debe tener 1 sola fecha de nacimiento tipo xsd
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] .
+
+s:ChessMatchShape a sh:NodeShape ;
+  sh:targetClass :ChessMatch ;
+  sh:property [
+    sh:path :white ;                    # El jugador blanco debe cumplir con las restricciones de ChessPlayerShape
+    sh:node s:ChessPlayerShape ;        
+  ] ;
+  sh:property [
+    sh:path :black ;                    # El jugador negro debe cumplir con las restricciones de ChessPlayerShape
+    sh:node s:ChessPlayerShape ;        
+  ] .
+
+# Q7
+s:ChessMatchShape a sh:NodeShape ;
+sh:targetClass :ChessMatch ;
+sh:property [
+  sh:path (:prev :date) ;            # Obtener la fecha previa
+  sh:lessThanOrEquals :date ;        # Comprobar que (:prev :date) <= :date
+] .
+
+# Q8
+s:ChessMatchShape a sh:NodeShape ;
+    sh:targetClass :ChessMatch ;
+    sh:property [
+        sh:path :prev ;
+        sh:node [
+            sh:property [
+                sh:path :black ;
+                sh:or (
+                    [ sh:equals :black ]  # Comprobar que el :prev :black coincide con el :black actual
+                    [ sh:equals :white ]  # Comprobar que el :prev :black coincide con el :white actual
+                ) ;
+            ] ;
+            sh:property [
+                sh:path :white ;
+                sh:or (
+                    [ sh:equals :white ]  # Comprobar que el :prev :white coincide con el :white actual
+                    [ sh:equals :black ]  # Comprobar que el :prev :white coincide con el :black actual
+                ) ;
+            ] ;
+        ] ;
+    ] .

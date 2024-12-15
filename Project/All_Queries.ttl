@@ -1,0 +1,87 @@
+# 1. Nombres y cantidad de plataformas en las que se encuentra disponible una película
+PREFIX ex: <http://ex.org/>
+
+SELECT ?title (GROUP_CONCAT(?platform; separator=", ") AS ?platforms) (COUNT(?platform) AS ?platformCount)
+WHERE {
+    ?movie ex:title ?title ;
+           ex:platform ?platform .
+}
+GROUP BY ?title
+ORDER BY DESC(?platformCount) ASC(?title)
+
+# 2. Películas distintas que están en una misma plataforma pero varian su disponibilidad en pais (Ej: por restricciones, doblaje, etc)
+PREFIX ex: <http://ex.org/>
+
+SELECT ?title ?platform (GROUP_CONCAT(?country; SEPARATOR=",") AS ?countries)
+WHERE {
+    ?movie ex:title ?title ;
+           ex:platform ?platform ;
+           ex:availableCountry ?country .
+}
+GROUP BY ?title ?platform
+ORDER BY ?title
+
+# 3. Género predominante en cada plataforma ****
+PREFIX ex: <http://ex.org/>
+
+SELECT ?platform (MAX(?genreCount) AS ?maxCount)
+    WHERE {
+      SELECT ?platform ?genre (COUNT(?title) AS ?genreCount)
+      WHERE {
+        ?movie ex:title ?title ;
+               ex:genre ?genre ;
+               ex:platform ?platform .
+      }
+      GROUP BY ?platform ?genre
+    }
+    GROUP BY ?platform
+
+# 4. Géneros populares en chile
+SELECT ?genre (COUNT(?movie) AS ?movieCount)
+WHERE {
+  ?movie ex:genre ?genre ;
+         ex:availableCountry ?country .
+  FILTER(CONTAINS(?country, "CL"))
+}
+GROUP BY ?genre
+ORDER BY DESC(?movieCount)
+
+# 5. Cantidad de películas disponibles por país
+SELECT ?country (COUNT(?movie) AS ?movieCount)
+WHERE {
+  ?movie ex:availableCountry ?country .
+}
+GROUP BY ?country
+ORDER BY DESC(?movieCount)
+
+
+# 6. Modificación de la query del Pato, su group by para comparar cuantas peliculas son compartidas entre plataformas
+
+SELECT ?platforms (COUNT(?title) AS ?movieCount)
+WHERE {
+  {
+    SELECT ?title (GROUP_CONCAT(?platform; separator=", ") AS ?platforms)
+    WHERE {
+      ?movie ex:title ?title ;
+             ex:platform ?platform ;
+             ex:type "movie" .
+    }
+    GROUP BY ?title
+  }
+}
+GROUP BY ?platforms
+ORDER BY DESC(?movieCount)
+
+# 7. cantidad de películas estrenadas por década
+
+PREFIX ex: <http://ex.org/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?decade (COUNT(?movie) AS ?movieCount)
+WHERE {
+  ?movie ex:releaseYear ?releaseYear .
+  ?movie ex:type "movie" .
+  BIND (xsd:integer((FLOOR((xsd:integer(?releaseYear)) / 10)) * 10) AS ?decade)
+}
+GROUP BY ?decade
+ORDER BY DESC(?decade)

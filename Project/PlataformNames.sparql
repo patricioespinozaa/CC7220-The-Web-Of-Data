@@ -1,9 +1,0 @@
-PREFIX ex: <http://ex.org/>
-
-SELECT ?title (GROUP_CONCAT(?platform; separator=", ") AS ?platforms) (COUNT(?platform) AS ?platformCount)
-WHERE {
-    ?movie ex:title ?title ;
-           ex:platform ?platform .
-}
-GROUP BY ?title
-ORDER BY DESC(?platformCount) ASC(?title)

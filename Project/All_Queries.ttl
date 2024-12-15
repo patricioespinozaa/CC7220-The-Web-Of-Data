@@ -21,7 +21,7 @@ WHERE {
 GROUP BY ?title ?platform
 ORDER BY ?title
 
-# 3. Género predominante en cada plataforma ****
+# 3. Género predominante en cada plataforma 
 PREFIX ex: <http://ex.org/>
 
 SELECT ?platform (MAX(?genreCount) AS ?maxCount)
@@ -55,7 +55,7 @@ GROUP BY ?country
 ORDER BY DESC(?movieCount)
 
 
-# 6. Modificación de la query del Pato, su group by para comparar cuantas peliculas son compartidas entre plataformas
+# 6. Conteo por plataforma de la cantidad de películas que están
 
 SELECT ?platforms (COUNT(?title) AS ?movieCount)
 WHERE {

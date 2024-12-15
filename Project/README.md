@@ -1,10 +1,8 @@
 # STREAMFUSION RDF
 
-## Introduction
-
 ## Project Description
 
-This project was developed as part of the **CC7220 - The Web of Data** course at the **Faculty of Physical and Mathematical Sciences, Universidad de Chile**.
+This project was developed as part of the **CC7220 - The Web of Data** course at the **Faculty of Physical and Mathematical Sciences, University of Chile**.
 
 The primary objective was to explore the availability of movies and series across various streaming platforms, such as **Amazon**, **Netflix**, and **HBO Max**. The project involved combining two or more datasets containing information about the content available on these platforms.
 

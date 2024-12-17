@@ -66,7 +66,7 @@ This process transforms and loads the data for analysis using Apache Jena Fuseki
 
 - [Rodrigo Araya](https://github.com/arayagallegos)
 - [Patricio Espinoza](https://github.com/patricioespinozaa)
-- Matías Rivera
+- [Matías Rivera](https://github.com/matito644)
 
 ---
 
